@@ -4,7 +4,11 @@ import {
   ScrollRestoration,
   createBrowserRouter,
 } from 'react-router-dom';
+import Dashboard from '@/pages/Dashboard';
 import Home from '@/pages/Home';
+import Login from '@/pages/Login';
+import AuthenticatedOnlyRoute from './AuthenticatedOnlyRoute';
+import UnauthenticatedOnlyRoute from './UnauthenticatedOnlyRoute';
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -33,7 +37,28 @@ const routes = [
     path: '/',
     element: <Root />,
     children: [
-      { path: '/', element: <Home /> },
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        element: <AuthenticatedOnlyRoute />,
+        children: [
+          {
+            path: '/dashboard',
+            element: <Dashboard />,
+          },
+        ],
+      },
+      {
+        element: <UnauthenticatedOnlyRoute />,
+        children: [
+          {
+            path: '/login',
+            element: <Login />,
+          },
+        ],
+      },
     ],
   },
 ];
