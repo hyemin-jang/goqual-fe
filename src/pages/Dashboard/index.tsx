@@ -1,8 +1,9 @@
 import React from 'react';
+import LampControlWidget from './components/LampControlWidget';
 
 const Dashboard = () => (
-  <div>
-    Dashboard
+  <div className="page">
+    <LampControlWidget />
   </div>
 );
 

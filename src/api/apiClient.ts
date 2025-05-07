@@ -3,11 +3,13 @@ import Axios, {
   type AxiosResponse,
   type AxiosError,
 } from 'axios';
+import qs from 'qs';
 import useAuthStore from '@/store/auth';
 
 const axios = Axios.create({
   baseURL: 'http://hejdev1.goqual.com:8080/',
   withCredentials: true,
+  paramsSerializer: (params) => qs.stringify(params),
 });
 
 axios.interceptors.request.use(

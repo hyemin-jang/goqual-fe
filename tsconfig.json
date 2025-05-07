@@ -14,7 +14,7 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*", "./src/svgr.d.ts"]
     }
   },
   "typeRoots": ["./types", "./node_modules/@types"],
