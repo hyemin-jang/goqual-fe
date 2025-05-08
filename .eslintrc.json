@@ -34,6 +34,7 @@
     ],
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",
+    "react/no-unstable-nested-components": "off",
     "no-param-reassign": "off",
     "import/prefer-default-export": "off",
     "import/extensions": [

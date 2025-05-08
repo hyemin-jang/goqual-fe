@@ -14,6 +14,7 @@ const axios = Axios.create({
 
 axios.interceptors.request.use(
   (config) => {
+    config.headers['Content-Type'] = 'application/json';
     const { token } = useAuthStore.getState();
     if (token) {
       config.headers.Authorization = `bearer ${token}`;
@@ -22,9 +23,20 @@ axios.interceptors.request.use(
   },
 );
 
-// axios.interceptors.response.use(
-
-// );
+axios.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    if (
+      error.response.status === 401
+      && error.response.data.errorCode === 11 // token expired
+    ) {
+      // TODO: Request new access token with refresh token
+      const { logout } = useAuthStore.getState();
+      logout();
+    }
+    return Promise.reject(error);
+  },
+);
 
 export type {
   AxiosRequestConfig,
