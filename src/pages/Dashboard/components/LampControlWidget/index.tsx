@@ -7,24 +7,28 @@ import {
 import { Slider } from '@/components/ui/slider';
 import Lamp from './statics/lamp.svg?react';
 
-const deviceId = 'e6d8ace0-1b87-11f0-b556-e7ea660b8ad9';
-
 const LampControlWidget = () => {
   const [brightness, setBrightness] = useState(0);
   const mutation = useMutation<void, DefaultError, UpdateLampBrightnessVariables['params']>({
-    mutationFn: (params) => updateLampBrightness({ deviceId, params }),
+    mutationFn: (params) => updateLampBrightness({
+      deviceId: import.meta.env.VITE_DEVICE_ID,
+      params,
+    }),
   });
 
   return (
     <div className="widget">
-      <div className="bg-gray-800 p-8 flex justify-center">
+      <div className="text-lg font-semibold pb-4">
+        Lamp Brightness Controller
+      </div>
+      <div className="bg-gray-800 w-[300px] h-[300px] rounded-full flex justify-center items-center mx-auto">
         <Lamp
           width={200}
           height={200}
           opacity={0.1 + brightness * 0.9}
         />
       </div>
-      <div className="p-6">
+      <div className="py-4 w-full">
         <div className="text-gray-500 text-sm mb-4">
           밝기:
           {' '}
@@ -37,6 +41,8 @@ const LampControlWidget = () => {
           step={0.01}
           onValueChange={([value]) => {
             setBrightness(value);
+          }}
+          onValueCommit={([value]) => {
             mutation.mutate({
               brightness: value,
             });

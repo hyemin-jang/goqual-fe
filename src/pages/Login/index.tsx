@@ -44,28 +44,37 @@ const Login = () => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <EmailField
-          name="username"
-          label="Email"
-          rules={{
-            required: true,
-          }}
-        />
-        <PasswordField
-          name="password"
-          label="Password"
-          rules={{
-            required: true,
-          }}
-        />
-        <FormRootError />
-        <Button type="submit">
-          Login
-        </Button>
-      </form>
-    </Form>
+    <div className="page py-20">
+      <div className="max-w-md mx-auto">
+        <div className="text-3xl font-semibold mb-10">
+          Sign in
+        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="form-layout">
+              <EmailField
+                name="username"
+                label="Email"
+                rules={{
+                  required: true,
+                }}
+              />
+              <PasswordField
+                name="password"
+                label="Password"
+                rules={{
+                  required: true,
+                }}
+              />
+              <FormRootError />
+              <Button type="submit">
+                Login
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </div>
   );
 };
 

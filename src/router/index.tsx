@@ -4,6 +4,8 @@ import {
   ScrollRestoration,
   createBrowserRouter,
 } from 'react-router-dom';
+import { AppSidebar } from '@/components/AppSidebar';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import Dashboard from '@/pages/Dashboard';
 import Home from '@/pages/Home';
 import Login from '@/pages/Login';
@@ -14,7 +16,21 @@ type MainLayoutProps = {
   children: React.ReactNode;
 };
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => children;
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => (
+  <div className="h-screen">
+    <SidebarProvider>
+      <AppSidebar />
+      <div className="flex-1 flex flex-col">
+        <header className="h-[48px] sticky bg-background border-b-1 border-b-sidebar-border top-0 z-1 px-2 flex items-center">
+          <SidebarTrigger />
+        </header>
+        <main className="flex-1">
+          {children}
+        </main>
+      </div>
+    </SidebarProvider>
+  </div>
+);
 
 const Root = () => (
   <MainLayout>
@@ -23,7 +39,7 @@ const Root = () => (
         <div className="h-full w-full flex items-center justify-center">
           loading...
         </div>
-        )}
+      )}
     >
       <Outlet />
     </Suspense>
@@ -33,6 +49,15 @@ const Root = () => (
 
 const routes = [
   { path: '*', element: <div>404 Not Found</div> },
+  {
+    element: <UnauthenticatedOnlyRoute />,
+    children: [
+      {
+        path: '/login',
+        element: <Login />,
+      },
+    ],
+  },
   {
     path: '/',
     element: <Root />,
@@ -47,15 +72,6 @@ const routes = [
           {
             path: '/dashboard',
             element: <Dashboard />,
-          },
-        ],
-      },
-      {
-        element: <UnauthenticatedOnlyRoute />,
-        children: [
-          {
-            path: '/login',
-            element: <Login />,
           },
         ],
       },
