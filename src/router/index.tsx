@@ -5,10 +5,12 @@ import {
   createBrowserRouter,
 } from 'react-router-dom';
 import { AppSidebar } from '@/components/AppSidebar';
+import { Button } from '@/components/ui/button';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import Dashboard from '@/pages/Dashboard';
 import Home from '@/pages/Home';
 import Login from '@/pages/Login';
+import useAuthStore from '@/store/auth';
 import AuthenticatedOnlyRoute from './AuthenticatedOnlyRoute';
 import UnauthenticatedOnlyRoute from './UnauthenticatedOnlyRoute';
 
@@ -21,8 +23,17 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => (
     <SidebarProvider>
       <AppSidebar />
       <div className="flex-1 flex flex-col">
-        <header className="h-[48px] sticky bg-background border-b-1 border-b-sidebar-border top-0 z-1 px-2 flex items-center">
+        <header className="h-[48px] sticky bg-background border-b-1 border-b-sidebar-border top-0 z-1 px-2 flex items-center justify-between">
           <SidebarTrigger />
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => {
+              useAuthStore.getState().logout();
+            }}
+          >
+            Logout
+          </Button>
         </header>
         <main className="flex-1">
           {children}
